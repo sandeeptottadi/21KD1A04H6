@@ -7,5 +7,5 @@ Tech stack:
      - Tailwind CSS
   Backend 
   
-     - NodeJd
+     - NodeJs
      - Express
