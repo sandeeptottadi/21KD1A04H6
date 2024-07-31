@@ -1,0 +1,125 @@
+.skeleton-container {
+  width: 100%;
+  height: fit-content;
+  opacity: 0.8;
+  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  animation: skeleton-loading 0.9s linear infinite alternate;
+  margin-bottom: 25px;
+}
+
+.company-logo-skeleton {
+  min-width: 60px;
+  max-width: 60px;
+  min-height: 60px;
+  max-height: 60px;
+  border-radius: 50%;
+  background-color: rgb(238, 231, 231);
+}
+
+.content-container-skeleton {
+  height: 100%;
+  width: 100%;
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.company-title-skeleton {
+  height: 26px;
+  width: 60%;
+  border-radius: 8px;
+  background-color: rgb(238, 231, 231);
+}
+
+.items1-skeleton,
+.items2-skeleton {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+}
+
+.items1-skeleton .item,
+.items2-skeleton .item {
+  height: 28px;
+  width: 120px;
+  margin-right: 15px;
+  background-color: rgb(238, 231, 231);
+  border-radius: 10px;
+}
+
+.items2-skeleton .item {
+  width: 150px;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 75%);
+  }
+  0% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+
+@media (width <= 500px) {
+  .company-logo-skeleton {
+    margin-bottom: 10px;
+  }
+  .skeleton-container {
+    flex-direction: column;
+    padding: 15px;
+  }
+  .content-container-skeleton {
+    margin-left: 0px;
+  }
+  .items1-skeleton,
+  .items2-skeleton {
+    margin-top: 10px;
+    height: 30px;
+  }
+  .company-logo-skeleton {
+    min-width: 50px;
+    max-width: 50px;
+    min-height: 50px;
+    max-height: 50px;
+  }
+  .company-title-skeleton {
+    height: 20px;
+    margin-top: 15px;
+  }
+  .items1-skeleton .item {
+    height: 20px;
+  }
+  .items2-skeleton .item {
+    height: 20px;
+  }
+}
+
+.about-skeleton,
+.requirement-skeleton {
+  width: 100px;
+  height: 20px;
+  background-color: rgb(238, 231, 231);
+  margin-top: 20px;
+}
+
+.about-line1-skeleton,
+.requirement-line1-skeleton {
+  width: 90%;
+  height: 20px;
+  background-color: rgb(238, 231, 231);
+  margin-top: 15px;
+}
+
+.requirement-line2-skeleton {
+  margin-bottom: 30px;
+}
+
+.about-line2-skeleton,
+.requirement-line2-skeleton {
+  width: 60%;
+  height: 20px;
+  background-color: rgb(238, 231, 231);
+  margin-top: 10px;
+  border-radius: 8px;
+}
