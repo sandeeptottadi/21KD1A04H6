@@ -27,6 +27,38 @@ export default function Filters() {
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(10000);
   const [availability, setAvailability] = useState("false");
+  const [ratingSortOrder, setRatingSortOrder] = useState("ascending");
+  const [priceSortOrder, setPriceSortOrder] = useState("ascending");
+  // ... existing code ...
+  const handleRatingSortOrderChange = (event: SelectChangeEvent) => {
+    const newSortOrder = event.target.value as string;
+    setPriceSortOrder(newSortOrder);
+    updateURL(
+      category,
+      company,
+      n,
+      min,
+      max,
+      availability,
+      newSortOrder,
+      priceSortOrder
+    );
+  };
+
+  const handlePriceSortOrderChange = (event: SelectChangeEvent) => {
+    const newSortOrder = event.target.value as string;
+    setPriceSortOrder(newSortOrder);
+    updateURL(
+      category,
+      company,
+      n,
+      min,
+      max,
+      availability,
+      ratingSortOrder,
+      newSortOrder
+    );
+  };
 
   const companies = ["AMZ", "FLP", "SNP", "MYN", "AZO"];
 
@@ -49,7 +81,16 @@ export default function Filters() {
   ];
 
   useEffect(() => {
-    updateURL(category, company, n, min, max, availability);
+    updateURL(
+      category,
+      company,
+      n,
+      min,
+      max,
+      availability,
+      ratingSortOrder,
+      priceSortOrder
+    );
   }, []);
 
   const navigate = useNavigate();
@@ -60,7 +101,9 @@ export default function Filters() {
     n: number,
     min: number,
     max: number,
-    availability: string
+    availability: string,
+    ratingSortOrder: string,
+    priceSortOrder: string
   ) => {
     const queryParams = new URLSearchParams();
     queryParams.set("category", category);
@@ -75,13 +118,31 @@ export default function Filters() {
   const handleCategoryChange = (event: SelectChangeEvent) => {
     const newCategory = event.target.value as string;
     setCategory(newCategory);
-    updateURL(newCategory, company, n, min, max, availability);
+    updateURL(
+      newCategory,
+      company,
+      n,
+      min,
+      max,
+      availability,
+      ratingSortOrder,
+      priceSortOrder
+    );
   };
 
   const handleCompanyChange = (event: SelectChangeEvent) => {
     const newCompany = event.target.value as string;
     setCompany(newCompany);
-    updateURL(category, newCompany, n, min, max, availability);
+    updateURL(
+      category,
+      newCompany,
+      n,
+      min,
+      max,
+      availability,
+      ratingSortOrder,
+      priceSortOrder
+    );
   };
 
   return (
@@ -135,7 +196,16 @@ export default function Filters() {
         onChange={(event) => {
           const newN = parseInt(event.target.value, 10);
           setN(newN);
-          updateURL(category, company, newN, min, max, availability);
+          updateURL(
+            category,
+            company,
+            newN,
+            min,
+            max,
+            availability,
+            ratingSortOrder,
+            priceSortOrder
+          );
         }}
       />
 
@@ -147,7 +217,16 @@ export default function Filters() {
         onChange={(event) => {
           const newN = parseInt(event.target.value, 10);
           setMin(newN);
-          updateURL(category, company, n, newN, max, availability);
+          updateURL(
+            category,
+            company,
+            n,
+            newN,
+            max,
+            availability,
+            ratingSortOrder,
+            priceSortOrder
+          );
         }}
       />
 
@@ -159,7 +238,16 @@ export default function Filters() {
         onChange={(event) => {
           const newN = parseInt(event.target.value, 10);
           setMax(newN);
-          updateURL(category, company, n, min, newN, availability);
+          updateURL(
+            category,
+            company,
+            n,
+            min,
+            newN,
+            availability,
+            ratingSortOrder,
+            priceSortOrder
+          );
         }}
       />
 
@@ -174,12 +262,46 @@ export default function Filters() {
               n,
               min,
               max,
-              val.target.checked ? "true" : "false"
+              val.target.checked ? "true" : "false",
+              ratingSortOrder,
+              priceSortOrder
             );
           }}
           {...label}
         />
       </div>
+
+      <Box sx={{ maxWidth: 120, minWidth: 200 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Sort by Price</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={priceSortOrder}
+            label="Sort by Price"
+            onChange={handlePriceSortOrderChange}
+          >
+            <MenuItem value="ascending">Ascending</MenuItem>
+            <MenuItem value="descending">Descending</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
+      <Box sx={{ maxWidth: 120, minWidth: 200 }}>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Sort by Rating</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={ratingSortOrder}
+            label="Sort by Rating"
+            onChange={handleRatingSortOrderChange}
+          >
+            <MenuItem value="ascending">Ascending</MenuItem>
+            <MenuItem value="descending">Descending</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
     </div>
   );
 }
