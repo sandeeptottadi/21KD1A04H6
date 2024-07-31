@@ -13,7 +13,6 @@ router.post("/get_products", middleware, async (req, res) => {
   const minPrice = parseInt(req.body.minPrice);
   const maxPrice = parseInt(req.body.maxPrice);
   const productsPerPage = parseInt(req.body.n);
-  //   const isAvailable = req.body.isAvailable;
   //   const discount = req.body.discount;
   //   const rating = req.body.rating;
 

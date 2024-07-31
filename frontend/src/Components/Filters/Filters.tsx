@@ -6,6 +6,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { TextField } from "@mui/material";
+import Switch from "@mui/material/Switch";
 
 export default function Filters() {
   interface Options {
@@ -18,11 +19,14 @@ export default function Filters() {
     { value: "vanilla", label: "Vanilla" },
   ];
 
+  const label = { inputProps: { "aria-label": "Switch demo" } };
+
   const [category, setCategory] = useState("Phone");
   const [company, setCompany] = useState("AMZ");
   const [n, setN] = useState(10);
   const [min, setMin] = useState(1);
   const [max, setMax] = useState(10000);
+  const [availability, setAvailability] = useState("false");
 
   const companies = ["AMZ", "FLP", "SNP", "MYN", "AZO"];
 
@@ -45,7 +49,7 @@ export default function Filters() {
   ];
 
   useEffect(() => {
-    updateURL(category, company, n, min, max);
+    updateURL(category, company, n, min, max, availability);
   }, []);
 
   const navigate = useNavigate();
@@ -55,7 +59,8 @@ export default function Filters() {
     company: string,
     n: number,
     min: number,
-    max: number
+    max: number,
+    availability: string
   ) => {
     const queryParams = new URLSearchParams();
     queryParams.set("category", category);
@@ -63,23 +68,24 @@ export default function Filters() {
     queryParams.set("n", n.toString());
     queryParams.set("min", min.toString());
     queryParams.set("max", max.toString());
+    queryParams.set("availability", availability);
     navigate({ search: queryParams.toString() });
   };
 
   const handleCategoryChange = (event: SelectChangeEvent) => {
     const newCategory = event.target.value as string;
     setCategory(newCategory);
-    updateURL(newCategory, company, n, min, max);
+    updateURL(newCategory, company, n, min, max, availability);
   };
 
   const handleCompanyChange = (event: SelectChangeEvent) => {
     const newCompany = event.target.value as string;
     setCompany(newCompany);
-    updateURL(category, newCompany, n, min, max);
+    updateURL(category, newCompany, n, min, max, availability);
   };
 
   return (
-    <div className=" w-3/4 flex flex-row justify-center gap-6">
+    <div className=" w-3/4 flex flex-row justify-center gap-6 flex-wrap">
       <Box sx={{ maxWidth: 240, minWidth: 120 }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Company</InputLabel>
@@ -129,7 +135,7 @@ export default function Filters() {
         onChange={(event) => {
           const newN = parseInt(event.target.value, 10);
           setN(newN);
-          updateURL(category, company, newN, min, max);
+          updateURL(category, company, newN, min, max, availability);
         }}
       />
 
@@ -141,7 +147,7 @@ export default function Filters() {
         onChange={(event) => {
           const newN = parseInt(event.target.value, 10);
           setMin(newN);
-          updateURL(category, company, n, newN, max);
+          updateURL(category, company, n, newN, max, availability);
         }}
       />
 
@@ -153,9 +159,27 @@ export default function Filters() {
         onChange={(event) => {
           const newN = parseInt(event.target.value, 10);
           setMax(newN);
-          updateURL(category, company, n, min, newN);
+          updateURL(category, company, n, min, newN, availability);
         }}
       />
+
+      <div>
+        <label>Product Availability</label>
+        <Switch
+          onChange={(val) => {
+            setAvailability(val.target.checked ? "true" : "false");
+            updateURL(
+              category,
+              company,
+              n,
+              min,
+              max,
+              val.target.checked ? "true" : "false"
+            );
+          }}
+          {...label}
+        />
+      </div>
     </div>
   );
 }
